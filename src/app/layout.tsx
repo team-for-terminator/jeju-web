@@ -10,7 +10,7 @@ import Providers from "@/providers/Providers";
 const font = Poppins({ subsets: ["latin"], weight: ["600"] });
 
 export const metadata: Metadata = {
-  title: "CORE AI",
+  title: "Fly Jeju",
   description: "AI APPLICATION",
 };
 

@@ -31,12 +31,20 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <SheetSide />
           </div>
           <div
-            className="opacity-80 hover:opacity-100 cursor-pointer"
+            className="opacity-80 hover:opacity-100 cursor-pointer flex items-center"
             onClick={() => {
               router.push("/");
             }}
           >
-            <p>Logo</p>
+            <p>
+              <Image
+                src={"/images/jeju_logo2.png"}
+                alt="logo"
+                width={40}
+                height={40}
+              ></Image>
+            </p>
+            <p> FLY-JEJU</p>
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useEffect, useRef, useState } from "react";
+import DialogButton from "@/components/DialogButton";
+import React, { useEffect, useRef, useState } from "react";
 
 const Map = () => {
   const imageUrl = "/images/adjusted_last.png";
@@ -12,7 +12,6 @@ const Map = () => {
   const [startY, setStartY] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
-  const image = new Image();
 
   const boxRef: any = useRef(null);
   const overlayRef: any = useRef(null);
@@ -29,7 +28,7 @@ const Map = () => {
     }
   };
 
-  const drawImage = () => {
+  const drawImage = (image: any) => {
     const canvas: any = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (ctx) {
@@ -46,8 +45,9 @@ const Map = () => {
   };
 
   useEffect(() => {
+    const image = new Image();
     image.src = imageUrl; // 이미지 URL을 설정하세요
-    image.onload = () => drawImage();
+    image.onload = () => drawImage(image);
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -77,8 +77,14 @@ const Map = () => {
     setIsDragging(false);
   };
 
+  // 오른쪽 클릭 이벤트를 막는 핸들러 함수
+  const handleContextMenu = (e: any) => {
+    // 기본 동작 방지
+    e.preventDefault();
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full pt-16">
       <div
         className="m-auto max-w-[1000px] max-h-[600px] overflow-auto scrollbar relative"
         ref={boxRef}
@@ -90,11 +96,19 @@ const Map = () => {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseOut={handleMouseUp}
+          onContextMenu={handleContextMenu}
         >
-          {Array.from({ length: 300 }).map((_) => {
+          {Array.from({ length: 300 }).map((_, i) => {
             return (
               <>
-                <div className="border border-white border-r border-b h-[204px] hover:bg-slate-400 hover:bg-opacity-25"></div>
+                <DialogButton index={i}>
+                  <div
+                    className="border border-white border-r border-b h-[204px] hover:bg-slate-400 hover:bg-opacity-25"
+                    onClick={() => {}}
+                  >
+                    {i}
+                  </div>
+                </DialogButton>
               </>
             );
           })}
